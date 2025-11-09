@@ -1,0 +1,12 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 2em;
+}
+form {
+  margin: 1em auto;
+}
+#result {
+  margin-top: 1em;
+  font-size: 1.2em;
+}
