@@ -11,21 +11,25 @@ form.addEventListener("submit", async (e) => {
 
   resultDiv.textContent = "Analyzing image... ⏳";
 
-  // Replace with your deployed backend URL
-  const response = await fetch("https://your-backend-url.com/analyze", {
-    method: "POST",
-    body: formData,
-  });
+  try {
+    // Replace this with your deployed backend URL for public use
+    const response = await fetch("http://127.0.0.1:5000/analyze", {
+      method: "POST",
+      body: formData
+    });
 
-  const data = await response.json();
+    const data = await response.json();
 
-  if (data.error) {
-    resultDiv.textContent = data.error;
-    return;
+    if (data.error) {
+      resultDiv.textContent = "Error: " + data.error;
+      return;
+    }
+
+    resultDiv.innerHTML = `
+      <h3>Prediction: ${data.label}</h3>
+      <p>Confidence: ${(data.confidence * 100).toFixed(2)}%</p>
+    `;
+  } catch (err) {
+    resultDiv.textContent = "Error connecting to backend: " + err;
   }
-
-  resultDiv.innerHTML = `
-    <h3>Prediction: ${data.label}</h3>
-    <p>Confidence: ${(data.confidence * 100).toFixed(2)}%</p>
-  `;
 });
